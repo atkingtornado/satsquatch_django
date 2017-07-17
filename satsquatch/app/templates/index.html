@@ -1,0 +1,404 @@
+
+{% block content %}
+    
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0, user-scalable=0'">
+    <head>
+
+        <title>SatSquatch</title>
+        <meta charset="utf-8" />
+
+        <script src="{% static 'app/js/intro.min.js' %}"></script>
+
+
+        <link rel="stylesheet" href="{% static 'app/css/leaflet.css' %}"/>
+        <link rel="stylesheet" href="{% static 'app/css/style.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/Control.Opacity.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/jquery-ui-1.10.3.custom.min.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/leaflet-sidebar.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/scrubber.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/L.Control.Locate.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/dragdealer.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/font-awesome-4.7.0/css/font-awesome.css' %}">
+        <link rel="stylesheet" href="{% static 'app/css/simplebar.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/introjs.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/introjs-modern.css' %}" />
+        <link rel="stylesheet" href="{% static 'app/css/sort.css' %}" />
+
+        <script src="{% static 'app/js/leaflet.js' %}"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+        <script src="{% static 'app/js/jquery-ui-1.10.3.custom.min.js' %}"></script>
+        <script src="{% static 'app/js/jquery.ui.touch-punch.min.js' %}"></script>
+        <script src="{% static 'app/js/map.js' %}"></script>
+        <script src="{% static 'app/js/leaflet-providers.js' %}"></script>
+        <script src="{% static 'app/js/Control.Opacity.js' %}"></script>
+        <script src="{% static 'app/js/leaflet-sidebar.js' %}"></script>
+        <script src="{% static 'app/js/scrubber.js' %}"></script>
+        <script src="{% static 'app/js/bigSlide.min.js' %}"></script>
+        <script src="{% static 'app/js/L.Control.Locate.min.js' %}"></script>
+        <script src="{% static 'app/js/leaflet.timedimension.min.js' %}"></script>
+        <script src="{% static 'app/js/iso8601.min.js' %}"></script>
+        <script src="{% static 'app/js/dragdealer.js' %}"></script>
+        <script src="{% static 'app/js/simplebar.js' %}"></script>
+        <script src="{% static 'app/js/jquery.vibrate.min.js' %}"></script>
+        <script src="{% static 'app/js/jquery.fullscreen-min.js' %}"></script>
+        <script src="{% static 'app/js/progressbar.min.js' %}"></script>
+        <script src="{% static 'app/js/html2canvas.js' %}"></script>
+        <script src="{% static 'app/js/html2canvas.svg.js' %}"></script>
+        <script src="{% static 'app/js/leaflet.ajax.min.js' %}"></script>
+        <script src="{% static 'app/js/leaflet-image.js' %}"></script>
+        <script src="{% static 'app/js/spin.min.js' %}"></script>
+        <script src="{% static 'app/js/Sortable.min.js' %}"></script>
+        <script src="https://unpkg.com/leaflet.vectorgrid@latest/dist/Leaflet.VectorGrid.bundled.js"></script>
+        
+    </head>
+
+    <body>
+        <div id='all-content'>
+         <nav id="menu" class="panel" role="navigation"> 
+            <div id='layers-content'> 
+                <div class='close-div' id='layers-close-div'>
+<!--                     <h3>Layers</h3> -->
+                    <a href="#menu" id='layers-close' class="close menu-link vibrate"><i class="fa fa-times fa-2x" aria-hidden="true"></i></a>
+                      <input value='layers' id="tab1" type="radio" name="tabs" checked>
+                      <label for="tab1">Layers</label>
+                        
+                      <input value="order" id="tab2" type="radio" name="tabs">
+                      <label for="tab2">Order</label>
+                </div> 
+                <div id='layers-scroll' class='scroll-div'>                
+                    <div id='visible-dropdown' class='layer-dropdown'>
+
+                        <div class='dropdown-header '>
+                            <h3>Visible</h3> <div class='layer-dropdown-arrow'> <i style='color: white;' class="fa fa-chevron-down fa-2x"></i></div>
+                        </div>
+                        <div class='layer-dropdown-content' id='visible'>
+                            <div id='G16-ABI-FD-BAND01' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Blue Visible Band</h4>
+                                <input data-layer-info='GOES-16 Band 1: Blue Visible ' id="goes16_1_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_1_toggle"></label>
+                            </div>
+                            <div id='GOES16_02' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Red Visible Band</h4>
+                                <input data-layer-info='GOES-16 Band 2: Red Visible' id="goes16_2_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_2_toggle"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id='nearinfrared-dropdown' class='layer-dropdown'>
+                        <div class='dropdown-header '>
+                            <h3>Near Infrared</h3> <div class='layer-dropdown-arrow'> <i style='color: white;' class="fa fa-chevron-down fa-2x"></i></div>
+                        </div>
+                        <div class='layer-dropdown-content' id='nearinfrared'>
+                            <div id='G16-ABI-FD-BAND03' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Vegetation NIR Band</h4>
+                                <input data-layer-info='GOES-16 Band 3: Vegetation NIR' id="goes16_3_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_3_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND04' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Cirrus NIR Band</h4>
+                                <input data-layer-info='GOES-16 Band 4: Cirrus NIR' id="goes16_4_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_4_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND05' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Snow/Ice NIR Band</h4>
+                                <input data-layer-info='GOES-16 Band 5: Snow/Ice NIR' id="goes16_5_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_5_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND06' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Cloud Particle Size NIR Band</h4>
+                                <input data-layer-info='GOES-16 Band 6: Cloud Particle Size NIR' id="goes16_6_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_6_toggle"></label>
+                            </div>
+                        </div>
+                    </div>
+                    <div id='infrared-dropdown' class='layer-dropdown'>
+                        <div class='dropdown-header '>
+                            <h3>Infrared</h3> <div class='layer-dropdown-arrow'> <i style='color: white;' class="fa fa-chevron-down fa-2x"></i></div>
+                        </div>
+                        <div class='layer-dropdown-content' id='infrared'>
+                            <div id='G16-ABI-FD-BAND07' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Shortwave Window IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 7: Shortwave Window IR' id="goes16_7_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_7_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND08' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Upper-level Water Vapor IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 8: Upper-level Water Vapor IR' id="goes16_8_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_8_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND09' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Mid-level Water Vapor IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 9: Mid-level Water Vapor IR' id="goes16_9_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_9_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND10' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Low-level Water Vapor IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 10: Low-level Water Vapor IR' id="goes16_10_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_10_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND11' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Cloud-Top Phase IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 11: Cloud-Top Phase IR' id="goes16_11_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_11_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND12' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Ozone IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 12: Ozone IR' id="goes16_12_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_12_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND13' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Clean Window IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 13: Clean Window IR' id="goes16_13_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_13_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND14' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Legacy Window IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 14: Legacy Window IR' id="goes16_14_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_14_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND15' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Dirty Window IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 15: Dirty Window IR' id="goes16_15_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_15_toggle"></label>
+                            </div>
+                            <div id='G16-ABI-FD-BAND16' class='single_toggle toggles'>
+                                <h4 class='toggle-label'>GOES-16 Carbon Dioxide IR Band</h4>
+                                <input data-layer-info='GOES-16 Band 16: Carbon Dioxide IR' id="goes16_16_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="goes16_16_toggle"></label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id='overlays-dropdown' class='layer-dropdown'>
+
+                        <div class='dropdown-header '>
+                            <h3>Overlays</h3> <div class='layer-dropdown-arrow'> <i style='color: white;' class="fa fa-chevron-down fa-2x"></i></div>
+                        </div>
+                        <div class='layer-dropdown-content' id='overlays'>
+                            <div id='nexrhres' class='multi_toggle toggles'>
+                                <h4 class='toggle-label'>Filtered NEXRAD</h4>
+                                <input id="nexrad_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="nexrad_toggle"></label>
+                            </div>
+                            <div id='SPCcoday1' class='multi_toggle toggles'>
+                                <h4 class='toggle-label'>SPC Day1 Outlook</h4>
+                                <input id="SPCcoday1_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                                <label for="SPCcoday1_toggle"></label>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                </div>
+                <div id='order-scroll' class='scroll-div' style="display: none;">
+                    <ul id="layer-list">
+                    </ul>
+                </div>
+            </div>
+            <div id='sectors-content'> 
+                <div class='close-div' id='sectors-close-div'>
+                    <h3>Sectors</h3>
+                    <a href="#menu" id='sectors-close' class="close menu-link vibrate"><i class="fa fa-times fa-2x" aria-hidden="true"></i></a>
+                </div> 
+                <div class='scroll-div'>
+                    <div class='sectors-container '>  
+                        <div class='sectors-div' id='goes-sectors'>
+                            <h3>GOES-16 Sector</h3>
+                            <div id='CONUS' class='sector-select goes-sector-select sector-selected'>
+                                <h4>CONUS</h4>
+                            </div>
+                            <div id='Mesoscale-1' class='sector-select goes-sector-select'>
+                                <h4>Mesoscale 1</h4>
+                            </div>
+                            <div id='Mesoscale-2' class='sector-select goes-sector-select'>
+                                <h4>Mesoscale 2</h4>
+                            </div>
+                        </div>
+                        <div class='sectors-div' id='goes-sectors'>
+                            <h3>Sector Zoom</h3>
+                            <div class='sector-select sector-zoom'>
+                                <h4 class='zoom-label'>Central Great Plains</h4>
+                            </div>
+                            <div class='sector-select sector-zoom'>
+                                <h4 class='zoom-label'>Northern Great Plains</h4>
+                            </div>
+                            <div class='sector-select sector-zoom'>
+                                <h4 class='zoom-label'>Southern Great Plains</h4>
+                            </div>
+                            <div class='sector-select sector-zoom'>
+                                <h4 class='zoom-label'>North America</h4>
+                            </div>
+                             <div class='sector-select sector-zoom'>
+                                <h4 class='zoom-label'>CONUS</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id='options-content'> 
+                <div class='close-div' id='options-close-div'>
+                    <h3>Options</h3>
+                    <a href="#menu" id='options-close' class="close menu-link vibrate"><i class="fa fa-times fa-2x" aria-hidden="true"></i></a>
+                </div> 
+                <div class='scroll-div'>
+                    <div class='options-container'>
+                        <h3>Account Options</h3>  
+
+                        {% if user.is_authenticated %}
+<!--                             <p id='user_greeting'>Welcome, {{ user.username }}</p> -->
+                            <h4 style="padding-left: 10px;">Welcome, {{ user.username }}</h4>
+                            <a style="text-decoration: none;" href="/"><div id='login-toggle' class='button -dark center'><strong>User Dashboard</strong></div></a>
+
+                            <a style="text-decoration: none;" href="/logout/"><div id='login-toggle' class='button -dark center'><strong>Logout</strong></div></a>
+                        {% else %}
+                            <a style="text-decoration: none;" href="/login/"><div id='login-toggle' class='button -dark center'><strong>Login</strong></div></a>
+                            <a style="text-decoration: none;" href="/signup/"><div id='login-toggle' class='button -dark center'><strong>Register</strong></div></a>
+                        {% endif %}
+
+
+                    </div>
+                    <div class='options-container'>
+                        <h3>Loop Options</h3>  
+                        <div id='speedscrubber' class='toggles'>
+                            <h4>Loop Speed</h4>
+                            <p class="speed-display">10 FPS</p>
+                        </div>
+                        <div id='framesscrubber' class='toggles'>
+                            <h4>Number of Frames</h4>
+                            <p class="frames-display">15</p>
+                        </div>
+                    </div>
+
+                    <div class='options-container'>
+                        <h3>General Options</h3>  
+                        <div id='UTC' class='utc-toggle toggles'>
+                            <h4 class='toggle-label'>Local Time Display</h4>
+                            <input id="UTC_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                            <label for="UTC_toggle"></label>
+                        </div>
+<!--                         <div id='advanced' class='advanced-toggle toggles'>
+                            <h4 class='toggle-label'>Advanced Mode</h4>
+                            <input value=1 id="advanced_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                            <label for="advanced_toggle"></label>
+                        </div> -->
+                        <div id='haptic' class='haptic-toggle toggles'>
+                            <h4 class='toggle-label'>Mobile Haptic Feedback</h4>
+                            <input id="haptic_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                            <label for="haptic_toggle"></label>
+                        </div>
+                        <div id='update' class='update-toggle toggles'>
+                            <h4 class='toggle-label'>Auto Update</h4>
+                            <input id="update_toggle" class="cmn-toggle cmn-toggle-round-flat vibrate-toggle" type="checkbox">
+                            <label for="update_toggle"></label>
+                        </div>
+                         <div id='updatescrubber' class='toggles' style='padding-top: 0px'>
+                            <p class="update-display">10 Min</p>
+                        </div>
+                    </div>
+                    <div class='options-container'>
+                        <h3>Help</h3>  
+                        <div id='tutorial-toggle' class='button -dark center'><strong>Show Tutorial</strong></div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+
+        <div class='wrap push' style='left: 15.625em; transition: left 300ms ease;'>
+            <div class='transform' id='menu-shadow'></div>
+            <div class ='leaflet-bar leaflet-control'>
+                <a href="#menu" id='layers-link' class="transform menu-link leaflet-bar-part leaflet-bar-part-single vibrate"><img class='layers-img' src="{% static 'app/css/images/layers-hres.png' %}"></a>
+            </div>
+            <div class ='leaflet-bar leaflet-control'>
+                <a href="#menu" id='sectors-link' class="transform menu-link leaflet-bar-part leaflet-bar-part-single vibrate"><i style='font-size:2.7em; margin-top: 4px; color:#f4f4f4' class="fa fa-globe fa-3x" aria-hidden="true"></i></a>
+            </div>            
+            <div class ='leaflet-bar leaflet-control'>
+                <a href="#menu" id='options-link' class="transform menu-link leaflet-bar-part leaflet-bar-part-single vibrate"><span><i style='margin-top:4px;color:#f4f4f4' class="fa fa-cog fa-3x" aria-hidden="true"></i></span></a>
+            </div>
+
+            <div id="mapid"> </div>
+        </div>
+        
+        <div id='time_container' class='transform'> 
+            <h3 id='time'></h3> 
+            <br>
+            <p id='layer-info'></p>
+            <i id='time_container_close' class="fa fa-chevron-left fa-2x vibrate" aria-hidden="true"></i>
+        </div>
+
+        <div id='options_container_dummy' style="position:absolute; right: 0px; top:155px; height: 43px; width: 25px;"> 
+        <div id='options_container' class='transform'> 
+            <i id='options_container_close' class="fa fa-chevron-left fa-2x vibrate" aria-hidden="true"></i>
+            <div class ='leaflet-bar leaflet-control'>
+                <a id='fullscreen-link' class="transform leaflet-bar-part leaflet-bar-part-single vibrate"><span><i class="fa fa-arrows-alt fa-2x"></i></span></a>
+            </div>
+             <div class ='leaflet-bar leaflet-control'>
+                <a id='share-link' class="transform leaflet-bar-part leaflet-bar-part-single vibrate"><span><i style='margin-top: 11px;font-size: 2.2em;' class="fa fa-share-square-o fa-2x"></i></span></a>
+            </div>
+            <div class ='leaflet-bar leaflet-control'>
+                <a id='refresh-link' class="transform leaflet-bar-part leaflet-bar-part-single vibrate"><span><i style='margin-top: 10px;font-size: 2.2em;' class="fa fa-refresh fa-2x"></i></span></a>
+            </div>
+        </div>
+        </div>
+
+        <div id='scrubber_container' class='transform dragdealer'> 
+            <div class="handle red-bar"><i id='time_bars' class="handle fa fa-bars fa-lg" aria-hidden="true"></i></div> 
+        </div>
+        <div id='time_control_container' class='transform'> 
+
+
+            <div id='step-back' class='time-control-div'>
+                <i id='step-back-button' class="fa fa-step-backward fa-2x" aria-hidden="true"></i>
+            </div>
+
+            <div id='play' class='time-control-div'>
+                <i id='play-button' style='color:white;' class="fa fa-play fa-2x" aria-hidden="true"></i>
+            </div>
+
+            <div id='time_spinner' class='time-control-div'>
+                <div id='time_spinner_view'></div>
+            </div>
+
+            <div id='pause' class='time-control-div'>
+                <i id='pause-button' class="fa fa-pause fa-2x" aria-hidden="true"></i>
+            </div>
+
+            <div id='step-forward' class='time-control-div'>
+                <i id='step-forward-button' class="fa fa-step-forward fa-2x" aria-hidden="true"></i>
+            </div>
+            
+            
+        </div>
+
+        <div id='login-container'>
+        <a id='login-close' class="vibrate"><i class="login-close fa fa-times fa-2x" aria-hidden="true"></i></a>
+         <div class="form">
+            <form class="register-form">
+              <input type="text" placeholder="name"/>
+              <input type="password" placeholder="password"/>
+              <input type="text" placeholder="email address"/>
+              <button>create</button>
+              <p class="message">Already registered? <a href="#">Sign In</a></p>
+            </form>
+            <form class="login-form">
+              <input type="text" placeholder="username"/>
+              <input type="password" placeholder="password"/>
+              <button>login</button>
+              <p class="message">Not registered? <a href="#">Create an account</a></p>
+            </form>
+          </div>
+        </div>
+
+        <div id='img-container'>
+            <a id='img-close' class="vibrate"><i class="img-close fa fa-times fa-2x" aria-hidden="true"></i></a>
+            <img id='screenshot'/>
+            <div id='img_load'></div>
+            <a id='img-link'><div id='savePNG' class='button -dark center'>Save PNG</div></a>
+        </div>
+
+
+        <div id='spinner'><img src="{% static 'app/css/images/ring-alt.svg' %}" /></div>
+    </div>
+    </body>
+{% endblock %}

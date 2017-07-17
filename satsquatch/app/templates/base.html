@@ -1,0 +1,20 @@
+<html>
+    <!-- header code -->
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'app/css/base.css' %}"/>
+
+    <div id='header'> 
+    	
+		{% if user.is_authenticated %}
+		    <p id='user_greeting'>Welcome, {{ user.username }}</p>
+		    <a class='login_logout' href="/logout/">logout</a>
+		{% else %}
+		    <p id='user_greeting'>Welcome, Guest</p>
+		    <a class='login_logout' href="/login/">Login</a>
+		{% endif %}
+    </div>
+
+    {% block content %}
+    {% endblock %}
+    <!-- footer code -->
+<html>

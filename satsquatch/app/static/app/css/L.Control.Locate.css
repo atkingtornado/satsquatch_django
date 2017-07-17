@@ -1,0 +1,27 @@
+/* Compatible with Leaflet 0.7 */
+.leaflet-control-locate{
+    position: fixed;
+    top: 140px;
+    right: 10px;
+    width: 35px;
+    height: 35px;
+    -webkit-transform: translate3d(190px, 0px, 0px); 
+    -moz-transform: translate3d(190px, 0px, 0px);
+
+}
+
+.leaflet-control-locate a {
+  font-size: 1.9em;
+  color:#f4f4f4;
+  cursor: pointer;
+      background: none;
+}
+.leaflet-control-locate a:hover {
+	background:none;
+}
+.leaflet-control-locate.active a {
+  color: #2074B6;
+}
+.leaflet-control-locate.active.following a {
+  color: #FC8428;
+}
